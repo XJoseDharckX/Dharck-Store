@@ -276,33 +276,36 @@
       contentsContainer.appendChild(content);
     });
 
-    function updateWishlist() {
-      const wishlist = document.getElementById("wishlist-items");
-      const totalDisplay = document.getElementById("total-gems");
-      wishlist.innerHTML = "";
-      let total = 0;
+function updateWishlist() {
+  const wishlist = document.getElementById("wishlist-items");
+  const totalDisplay = document.getElementById("total-gems");
+  wishlist.innerHTML = "";
+  let total = 0;
 
-      document.querySelectorAll('input[type="number"]').forEach(input => {
-        const quantity = parseInt(input.value) || 0;
-        const name = input.dataset.name;
-        const gem = parseInt(input.dataset.gem);
-        const img = input.dataset.img;
-        if (quantity > 0) {
-          const subtotal = quantity * gem;
-          total += subtotal;
-          wishlist.innerHTML += `
-            <div class="wishlist-item">
-              <div class="left">
-                <img src="images/${img}" class="item-img" />
-                <span><strong>${name}</strong> ×${quantity}</span>
-              </div>
-              <div class="right">${subtotal} <img src="images/gema.png" class="gem-icon" /></div>
-            </div>
-          `;
-        }
-      });
-      totalDisplay.textContent = total;
+  document.querySelectorAll('input[type="number"]').forEach(input => {
+    const quantity = parseInt(input.value) || 0;
+    const name = input.dataset.name;
+    const gem = parseInt(input.dataset.gem);
+    const img = input.dataset.img;
+
+    if (quantity > 0) {
+      const subtotal = quantity * gem;
+      total += subtotal;
+      wishlist.innerHTML += `
+        <div class="wishlist-item">
+          <div class="left">
+            <img src="images/${img}" class="item-img" />
+            <span><strong>${name}</strong> ×${quantity}</span>
+          </div>
+          <div class="right">${subtotal.toLocaleString('es-VE')} <img src="images/gema.png" class="gem-icon" /></div>
+        </div>
+      `;
     }
+  });
+
+  totalDisplay.textContent = total.toLocaleString('es-VE');
+}
+
 
     document.addEventListener("input", event => {
       if (event.target.matches('input[type="number"]')) updateWishlist();
